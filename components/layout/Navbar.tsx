@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { getAuthUser, logoutAction } from "@/lib/actions/auth.actions";
 import { CartButton } from "./CartButton";
 import { SearchBar } from "./SearchBar";
 
-const Navbar = () => {
+const Navbar = async () => {
+    const user = await getAuthUser();
 return (
     <nav className="w-full bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,9 +29,20 @@ return (
                     <Link href="/about" className="text-black font-medium hover:underline underline-offset-8 decoration-gray-400">
                         About
                     </Link>
-                    <Link href="/signup" className="text-black font-medium hover:underline underline-offset-8 decoration-gray-400">
-                        Sign Up
-                    </Link>
+                    {user ? (
+                        <div className="flex items-center gap-4">
+                            <span className="text-black font-medium pr-2">Hi, {user.firstName}</span>
+                            <form action={logoutAction}>
+                                <button type="submit" className="text-red-600 font-medium hover:underline underline-offset-8 decoration-red-400 cursor-pointer">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    ) : (
+                        <Link href="/login" className="text-black font-medium hover:underline underline-offset-8 decoration-gray-400">
+                            Login
+                        </Link>
+                    )}
                 </div>
                 
                 {/*  Search and Icons */}

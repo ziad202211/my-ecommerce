@@ -3,7 +3,7 @@ import { z } from "zod";
 // --- Authentication Schemas ---
 
 export const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
+  username: z.string().min(4, { message: "Username is required" }),
   password: z.string().min(8, { message: "Password must be at least 8 characters" }),
 });
 
@@ -14,6 +14,17 @@ export const signupSchema = loginSchema.extend({
   message: "Passwords don't match",
   path: ["confirmPassword"],
 });
+
+export const userSchema = z.object({
+  id: z.number(),
+  username: z.string(),
+  email: z.string().email(),
+  firstName: z.string(),
+  lastName: z.string(),
+  image: z.string().url(),
+  
+});
+
 
 
 // --- E-commerce Schemas ---
@@ -34,12 +45,6 @@ export const checkoutSchema = z.object({
   cardNumber: z.string().min(16, { message: "Invalid card number" }),
 });
 
-// Infer types from the schemas
-export type LoginFormValues = z.infer<typeof loginSchema>;
-export type SignupFormValues = z.infer<typeof signupSchema>;
-export type ProductFormValues = z.infer<typeof productSchema>;
-export type CheckoutFormValues = z.infer<typeof checkoutSchema>;
-
 // --- Contact Schemas ---
 export const contactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -47,4 +52,10 @@ export const contactFormSchema = z.object({
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
+// Infer types from the schemas
+export type LoginFormValues = z.infer<typeof loginSchema>;
+export type SignupFormValues = z.infer<typeof signupSchema>;
+export type ProductFormValues = z.infer<typeof productSchema>;
+export type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 export type ContactFormValues = z.infer<typeof contactFormSchema>;
+export type UserFormValues = z.infer<typeof userSchema>;

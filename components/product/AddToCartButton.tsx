@@ -23,7 +23,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
   const mutation = useMutation({
     mutationFn: async () => {
       // Simulating a real POST request to add to cart on the backend
-      const response = await fetch('https://dummyjson.com/carts/add', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carts/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
