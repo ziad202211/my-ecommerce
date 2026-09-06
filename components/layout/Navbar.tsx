@@ -12,7 +12,7 @@ return (
                 {/*Our Logo*/}
                 <div className="flex-shrink-0 flex items-center">
                     <Link href="/" className="text-2xl font-bold tracking-wide text-black">
-                        My Shop
+                        My Ecommerce
                     </Link>
                 </div>
                 
